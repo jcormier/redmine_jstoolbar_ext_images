@@ -2,7 +2,8 @@
 require_relative 'lib/redmine_jstoolbar_ext_images_hook_listener'
 
 Rails.configuration.to_prepare do
-  require_dependency 'wiki_formatting_macros_patch'
+  require_relative 'lib/wiki_formatting_macros_patch'
+  WikiFormattingMacrosPatch.apply!
 end
 
 Redmine::Plugin.register :redmine_jstoolbar_ext_images do
