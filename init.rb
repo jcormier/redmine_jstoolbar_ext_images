@@ -1,5 +1,5 @@
 # encoding: utf-8
-require_dependency 'redmine_jstoolbar_ext_images'
+require_relative 'lib/redmine_jstoolbar_ext_images_hook_listener'
 
 Rails.configuration.to_prepare do
   require_dependency 'wiki_formatting_macros_patch'
