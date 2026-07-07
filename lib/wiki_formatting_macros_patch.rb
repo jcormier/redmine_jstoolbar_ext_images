@@ -25,7 +25,7 @@ module WikiFormattingMacrosPatch
     Redmine::WikiFormatting::Macros.class_eval do
       macro :thumbnail do |obj, args|
         adjusted_args = args.dup
-        adjusted_args[0] = URI.decode(args[0])
+        adjusted_args[0] = URI::DEFAULT_PARSER.unescape(args[0]) if args[0]
         obj ||= WikiFormattingMacrosPatch::RedmineEditorPreviewTabThumbnail.new(@attachments) if @attachments
         macro_original_thumbnail(obj, adjusted_args)
       end
