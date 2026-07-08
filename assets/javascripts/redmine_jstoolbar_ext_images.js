@@ -31,8 +31,15 @@
    * @return array - image urls
    */
   RedmineWikiToolbarExt.Attachments = (function () {
-    var base_url = $("head link[rel='stylesheet']:first").attr('href').replace(/stylesheets.+$/, '');
-    var attachments_url = base_url + 'attachments/download/';
+    // Build the attachment-download URL base from the Rails relative URL root
+    // exposed by the plugin's head hook (jstoolbarExtImagesUrlRoot, e.g.
+    // "/redmine" or ""). The old approach of stripping "stylesheets/..." off the
+    // first stylesheet href breaks on Redmine 6 / propshaft, where the first
+    // stylesheet is a fingerprinted plugin asset (e.g.
+    // plugin_assets/additionals/variables-<digest>.css) with no "stylesheets/"
+    // segment, so nothing was stripped and the built URLs were garbage.
+    var url_root = (typeof jstoolbarExtImagesUrlRoot !== 'undefined') ? jstoolbarExtImagesUrlRoot : '';
+    var attachments_url = url_root + '/attachments/download/';
 
     var attachments = function() {
       var files = [];
